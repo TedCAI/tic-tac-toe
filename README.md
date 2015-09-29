@@ -7,7 +7,7 @@ Tic-tac-toe is a famous mini game. This repository includes the code for tic-tac
 What you need to do is to run following commends.
 
 ```
-g++ NewOxo.cpp game.cpp -o NameOfGame
+g++ AI.cpp NewOxo.cpp game.cpp -o NameOfGame
 ./NameOfGame
 ```
 
