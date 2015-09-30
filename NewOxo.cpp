@@ -6,6 +6,7 @@
 #include <string.h>
 #include "AI.h"
 
+
 using namespace std;
 
 NewOxo::NewOxo(int start_from){
@@ -63,29 +64,50 @@ void NewOxo::next_step(int row, int col, int player){
 	boarder[3*(col - 1) + row - 1] = player;	
 }
 
+void NewOxo::next_step(int index, int player){
+	boarder[index] = player;
+}
+
+void NewOxo::human_player(Boarder * game_boarder){
+	cout<<"Player "<<convert_value_to_string(player)<<"'s turn."<<endl;
+	int row, col;
+	cout<<"Select a column (1~3): ";
+	cin>>row;
+        cout<<"Select a row (1~3): ";
+	cin>>col;
+	if(valid_step(row, col) && game_boarder->is_empty(row, col)){
+		next_step(row, col, player);
+		game_boarder->boarder = boarder;
+	}
+	else{
+		cout<<"Invalid location! Please try again!"<<endl;
+		next_player();
+	}
+}
+
+void NewOxo::AI_player(Boarder * game_boarder){
+	cout<<"AI's turn!"<<endl;
+	AI * ai = new AI();
+	int AI_solution = -1;
+        AI_solution = ai->best_solution(boarder, player);
+	next_step(AI_solution, player);
+	game_boarder->boarder = boarder;
+}
+
 void NewOxo::start(){
-	AI * ai = new AI(boarder);
+	Boarder * game_boarder = new Boarder(boarder);
 	while(!is_full_boarder()){
 		display_boarder(boarder);
-		cout<<"Player "<<convert_value_to_string(player)<<"'s turn."<<endl;
-		int row, col;
-		cout<<"Select a column (1~3): ";
-		cin>>row;
-		cout<<"Select a row (1~3): ";
-		cin>>col;
-		if(valid_step(row, col) && is_empty(row, col)){
-			next_step(row, col, player);
-			ai->boarder = boarder;
-			if(ai->has_winner()){
+		if(player == -1)
+			human_player(game_boarder);
+		else
+			AI_player(game_boarder);
+			if(game_boarder->has_winner()){
 				display_boarder(boarder);
 				cout<<"Player "<<convert_value_to_string(player)<<" win!"<<endl;
 				break;
 			}			
 			else
 				next_player();
-		}
-		else
-			cout<<"Invalid location! Please try again!"<<endl;
-		
 	}
 }

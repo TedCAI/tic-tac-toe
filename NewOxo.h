@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <vector>
 #include <stdlib.h>
+#include "boarder.h"
 
 using namespace std;
 
@@ -12,6 +13,9 @@ public:
 	int player;
 	bool is_empty(int, int);
 	void next_step(int, int, int);
+	void next_step(int, int);
+	void human_player(Boarder *);
+	void AI_player(Boarder *);
 	void next_player();
 	string convert_value_to_string(int);
 	vector<string> convert_boarder(const vector<int> &);
@@ -19,11 +23,5 @@ public:
 	bool is_full_boarder();
 	bool valid_step(int, int);
 	bool has_winner();
-//	bool gameover(const vector<int> &);
-	
-
-//	inline bool gameover(){
-//		return gameover(boarder);
-//	}
 	void start();
 };
