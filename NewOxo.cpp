@@ -94,20 +94,28 @@ void NewOxo::AI_player(Boarder * game_boarder){
 	game_boarder->boarder = boarder;
 }
 
-void NewOxo::start(){
+void NewOxo::start(int mode){
 	Boarder * game_boarder = new Boarder(boarder);
 	while(!is_full_boarder()){
 		display_boarder(boarder);
-		if(player == -1)
+		if(player == 1)
 			human_player(game_boarder);
 		else
-			AI_player(game_boarder);
-			if(game_boarder->has_winner()){
-				display_boarder(boarder);
-				cout<<"Player "<<convert_value_to_string(player)<<" win!"<<endl;
-				break;
-			}			
-			else
-				next_player();
+			if(mode == 2)
+				AI_player(game_boarder);
+			if(mode == 1)
+				human_player(game_boarder);
+		if(game_boarder->has_winner()){
+			display_boarder(boarder);
+			cout<<"Player "<<convert_value_to_string(player)<<" wins!"<<endl;
+			break;
+		}
+		else if(game_boarder->is_full_boarder()){
+			display_boarder(boarder);
+			cout<<"Draw!"<<endl;
+			break;
+		}			
+		else
+			next_player();
 	}
 }

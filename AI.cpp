@@ -87,9 +87,6 @@ int AI::best_score(const vector<int> & scores, int player){
 int AI::best_solution(const vector<int> & current_boader, int current_player){
 	vector<int> scores;
 	scores = bfs(current_boader, current_player);
-	for(int i=0;i<9;i++)
-		cout<<scores[i]<<" ";
-	cout<<endl;
 	int score = best_score(scores, 1*current_player);
 	for(int i=0;i<9;i++)
 		if(scores[i] == score)

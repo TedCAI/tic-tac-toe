@@ -23,5 +23,5 @@ public:
 	bool is_full_boarder();
 	bool valid_step(int, int);
 	bool has_winner();
-	void start();
+	void start(int);
 };
